@@ -1,0 +1,37 @@
+group,symbol,name,value,low,high,unit,evidence,code_reference,source,used_for
+Lactate arm,EC50_lac,lldPRD/LldR half-maximal lactate,1.6,0.5,5.0,mM,scenario,sensors.EC50_LACTATE_WT,"Zuniga et al. 2021 (ALPaGA) [@zuniga2021]: wild-type lldPRD biosensor, EC50 ~1.6 mM",tissue axis; lumen discrimination
+Lactate arm,n_lac,lldPRD Hill coefficient,1.0,1.0,2.0,dimensionless,scenario,sensors.HILL_LACTATE_WT,No cooperativity reported for LldR; single-site Hill is the default. 9.23 assumed 2,analytic ceiling on lactate discrimination
+Lactate arm,b_lac,lldPRD basal fraction,0.142857,0.001,0.20,fraction of max,scenario,sensors.BASAL_LACTATE_WT,~7-fold dynamic range implies basal ~1/7; 9.23 used 0.0078,"caps discrimination at 1/basal = 7x"
+Hypoxia arm,K_O2,pPepT/FNR half-maximal oxygen,0.49,0.3,3.0,% O2 (gas phase),literature_prior,sensors.K_O2_PERCENT_FNR,"Hojberg et al. 1999 [@hojberg1999]: FNR-family promoter half-maximal at 5e2 Pa = 0.49 % O2. 9.23 used 1.0 %, unsourced. Dominant driver at colonic mucosa (ST 0.736) -- see 2.5",tissue axis
+Hypoxia arm,n_O2,pPepT Hill coefficient,2.0,1.0,3.0,dimensionless,scenario,sensors.HypoxiaSensor.hill,Shared prior with 9.23,tissue axis
+Hypoxia arm,b_O2,pPepT basal fraction,0.05,0.02,0.20,fraction of max,scenario,sensors.HypoxiaSensor.basal,9.23 fitted 0.122 (its pept_basal_fraction),"lesion-size floor; micro-lesion argument"
+Quorum,n_Q,pLux quorum Hill coefficient,1.0,0.95,1.5,dimensionless,literature_prior,sensors.QUORUM_HILL_PLUX,"Ramalho et al. 2016 [@ramalho2016]: pLux dose response fitted at four resolutions, n = 0.95-1.5, centre 1.0. 9.23 used 1.0 and 2.978 -- see 2.5",tissue axis; lesion-size turn-on
+Quorum,L_AHL,AHL screening length,3000.0,,,um,scenario,multilesion.AHL_DIFFUSION_LENGTH_UM,9.23 run_manifest.json,cluster superposition; lesion-size kernel
+Geometry,d_O2,oxygen penetration from perfused surface,178.0,,,um,derived,lesion_size.OXYGEN_PENETRATION_UM,"9.23 MODEL_SPEC_4_3 section 2: 1 % O2 contour at 222 um in a 400 um nodule",no hypoxic core below this radius
+Geometry,R_nodule,reference nodule radius,400.0,,,um,scenario,spatial.NODULE_RADIUS_UM,9.23 used this throughout,escape fraction; dose-vs-radius reference
+Geometry,O2_rim,oxygen at the perfused rim,5.0,,,% O2,scenario,lesion_size.RIM_O2_PERCENT,9.23 spatial parameters,mean hypoxia activity
+Geometry,O2_core,oxygen in the hypoxic core,0.5,,,% O2,scenario,lesion_size.CORE_O2_PERCENT,9.23 spatial parameters,"tumour reference; the 'not anoxic' half of the key binary"
+Geometry,R_off,lesion radius 9.23 reported OFF,150.0,,,um,scenario,multilesion.LESION_OFF_UM,9.23 finding 4,cluster equivalence
+Geometry,R_on,lesion radius 9.23 reported ON,1000.0,,,um,scenario,multilesion.LESION_ON_UM,9.23 finding 4,cluster equivalence
+Transport,L_lac,lactate diffusion length,5099.0,,,um,scenario,spatial.DIFFUSION_LENGTHS_UM[lactate],9.23 run_manifest.json,scale table; free-field gradient
+Transport,L_eff_untagged,GSDMD-N diffusion length without SsrA,670.8,,,um,scenario,spatial.DIFFUSION_LENGTHS_UM[GSDMD-N (no SsrA)],9.23 run_manifest.json,escape fraction 91.1 %
+Transport,L_eff_tagged,GSDMD-N diffusion length with SsrA,300.0,,,um,scenario,spatial.DIFFUSION_LENGTHS_UM[GSDMD-N (+SsrA)],9.23 run_manifest.json,escape fraction 73.2 %
+Effector,delta_nat,effector decay without the degron,0.08,,,1/h,scenario,ssra.DELTA_NATURAL,"Half-life 8.7 h in normal tissue",SsrA half-life table
+Effector,delta_built,effector decay with the degron as built,0.35,,,1/h,scenario,ssra.DELTA_BUILT,"Half-life 1.6 h; ~2.3x stronger than the optimum",SsrA half-life table
+Effector,rho_pool,intracellular pool ratio untagged over tagged,5.375,,,dimensionless,derived,spatial.POOL_RATIO_UNTAGGED_OVER_TAGGED,Module 3.4 TradeoffModel,"88 % of SsrA's spatial benefit is this, not confinement"
+Effector,eta_nodule,tagged effector retained inside a 400 um nodule,0.268,,,fraction,derived,dose.NODULE_RETENTION,"Module 4.3: 73.2 % destroyed outside",delivery penalty in the dose back-calculation
+Calibration,b_dose,net dose-kill exponent (net of gfp),2.650782,2.650782,3.376395,dimensionless,calibration,fitted:dose_exponent_gfp,"Block 5, GSDMD-SsrA net of gfp, log-log fit, r2 0.9956. Bounds are the two control choices",effective-dose back-calculation; margin conversion
+Calibration,A_dose,net dose-kill amplitude (net of gfp),0.02509848,,,% per OD^b,calibration,fitted:dose_amplitude_gfp,"Block 5, same fit",effective-dose back-calculation
+Calibration,r_biomass,induced 24 h OD untagged over tagged,0.584746,,,dimensionless,calibration,fitted:biomass_ratio,"Blocks 1-2, aerobic + lactate. Forecast from t <= 12 h reproduces it to 0.41 %",the SsrA keep/drop criterion
+Calibration,r_potency,per-OD killing untagged over tagged,1.413502,,,dimensionless,calibration,fitted:potency_ratio,"Block 5 at 10 OD, both constructs in the same block",the SsrA keep/drop criterion
+Calibration,SI,selectivity index CT26 over L929,3.325581,,,dimensionless,calibration,fitted:selectivity_index,"Block 6 internal pairing only, n=3, p < 0.001. The 11.4x and 2.97x figures are withdrawn",construct-level selectivity
+Targets,T_CT26,CT26 volume doubling time,,24.0,48.0,h,scenario,dose.CT26_DOUBLING_H,Murine line; two orders of magnitude faster than the indication,efficacy criterion
+Targets,T_human,human colorectal volume doubling time,,100.0,600.0,d,scenario,dose.HUMAN_CRC_DOUBLING_D,The clinical indication,efficacy criterion
+Targets,T_renew,colonic epithelial renewal cycle,,3.0,5.0,d,scenario,dose.COLONIC_RENEWAL_D,"Crypt-to-surface replacement. A cycle, so the rate is 1/T and not ln2/T",off-target tolerance criterion
+Immune,h,burden at half-maximal immune killing,0.2,,,fraction of capacity,scenario,immune.ImmuneCascade.evasion_scale,"Declared; module 6 is scenario_only throughout",the second eradication threshold
+Protocol,t_exp,co-culture exposure window,24.0,,,h,protocol,dose.EXPOSURE_H,Block 5 is an endpoint readout,both rate criteria
+Protocol,x_max,maximum reportable extrapolation,3.0,,,fold,protocol,dose.EXTRAPOLATION_LIMIT,"Declared before use; a power law has no threshold, so both directions are bounded",guard rail on the dose inversion
+Protocol,b_cons,conservative exponent for margin claims,1.0,,,dimensionless,protocol,dose.CONSERVATIVE_EXPONENT,Credits the margin with no amplification at all,margin-to-rate conversion
+Protocol,tol_ratio,held-out prediction ratio tolerance,0.25,,,fraction,protocol,validation.RATIO_TOLERANCE,Declared before the validation ran,validation layer
+Protocol,tol_se,held-out prediction standard-error tolerance,2.0,,,SE,protocol,validation.SE_TOLERANCE,Declared before the validation ran,validation layer
+Protocol,t_cut,forecast cutoff for the capacity holdout,12.0,,,h,protocol,validation.FORECAST_CUTOFF_H,Must exclude the 24 h target,validation layer

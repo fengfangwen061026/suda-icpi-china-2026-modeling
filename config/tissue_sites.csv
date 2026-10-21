@@ -1,0 +1,8 @@
+site,label,o2_percent,lactate_mM,lactate_low_mM,lactate_high_mM,anoxic,glucose_rich,evidence_class,source
+tumour_core,Tumour core,0.5,8.0,5.0,15.0,0,0,literature_prior,"9.23 spatial_parameters.csv; Walenta & Mueller-Klieser 2004 (tumour lactate 4-40 mM)"
+tumour_rim,Tumour rim,5.0,8.0,5.0,15.0,0,0,literature_prior,"9.23 spatial_parameters.csv"
+colonic_mucosa,Colonic mucosa,2.0,1.5,0.5,3.0,0,0,literature_prior,"9.23 spatial_parameters.csv"
+well_perfused,Well-perfused tissue,10.0,1.0,0.5,2.0,0,0,literature_prior,"blood lactate 0.5-2 mM at rest"
+colon_lumen_healthy,Colon lumen (healthy),0.0,0.6,0.0,2.4,1,1,literature_prior,"Crit Care 2006 PMC1794470: rectal L-lactate 0.5 [0-1.6] mM, D-lactate 0.1 [0-0.8] mM"
+colon_lumen_faecal,Colon lumen (faecal upper),0.0,5.0,1.0,8.5,1,1,literature_prior,"Duncan et al. AEM 2004: lactate <5 mM in healthy faeces; stool means to 8.5 mM"
+colon_lumen_dysbiotic,Colon lumen (dysbiosis/UC),0.0,100.0,20.0,100.0,1,1,scenario_only,"Mayeur et al. PLoS ONE 2013; Hove & Mortensen 1994: faecal lactate to 100 mM in UC / short bowel"

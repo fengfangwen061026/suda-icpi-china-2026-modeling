@@ -1,0 +1,389 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>{{TITLE}}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:ital,wght@0,400;0,500;1,400&display=swap">
+<style>
+/* Layout: one measured column of serif text; figures and tables break out wider. */
+:root {
+  --bg:        #fbfcfd;
+  --surface:   #f1f5f7;
+  --fg:        #10171b;
+  --muted:     #5a6a73;
+  --accent:    #16688c;
+  --rule:      #dde6ea;
+
+  --serif: "IBM Plex Serif", Georgia, "Times New Roman", serif;
+  --sans:  "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:  "IBM Plex Mono", ui-monospace, "SF Mono", Menlo, monospace;
+
+  --measure: 34rem;
+  --wide: 52rem;
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg:      #0d1316;
+    --surface: #151e23;
+    --fg:      #e7eef1;
+    --muted:   #93a5ae;
+    --accent:  #5fb6da;
+    --rule:    #233038;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg:      #0d1316;
+  --surface: #151e23;
+  --fg:      #e7eef1;
+  --muted:   #93a5ae;
+  --accent:  #5fb6da;
+  --rule:    #233038;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--serif);
+  font-size: 17px;
+  line-height: 1.62;
+  font-synthesis-weight: none;
+}
+img { max-width: 100%; height: auto; display: block; }
+
+.page {
+  max-width: var(--wide);
+  margin-inline: auto;
+  padding-inline: 20px;
+  padding-block: 56px 96px;
+  display: flex;
+  flex-direction: column;
+  gap: 44px;
+}
+.col { max-width: var(--measure); }
+.col > * + * { margin-top: 1.05em; }
+.col > h3 { margin-top: 2.1em; }
+
+header.masthead { display: flex; flex-direction: column; gap: 10px; }
+.eyebrow {
+  font-family: var(--sans);
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+h1 {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: clamp(2rem, 1.3rem + 2.6vw, 2.9rem);
+  line-height: 1.08;
+  letter-spacing: -0.02em;
+  margin: 0;
+  text-wrap: balance;
+}
+.standfirst {
+  font-size: 1.1rem;
+  color: var(--muted);
+  max-width: var(--measure);
+  margin: 0;
+}
+
+h2 {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 0 0 22px;
+  padding-bottom: 9px;
+  border-bottom: 1px solid var(--rule);
+}
+h3 {
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 1.22rem;
+  line-height: 1.28;
+  letter-spacing: -0.012em;
+  margin: 0 0 0.35em;
+  text-wrap: balance;
+}
+p { margin: 0; }
+em { font-style: italic; }
+
+.contents {
+  background: var(--surface);
+  border: 1px solid var(--rule);
+  padding: 22px 24px;
+  font-family: var(--sans);
+  font-size: 14px;
+}
+.contents h4 {
+  margin: 0 0 12px;
+  font-size: 11.5px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.contents ol { margin: 0; padding: 0; list-style: none; columns: 2; column-gap: 34px; }
+.contents li { break-inside: avoid; margin-bottom: 6px; }
+.contents a { color: var(--fg); text-decoration: none; border-bottom: 1px solid transparent; }
+.contents a:hover { border-bottom-color: var(--accent); color: var(--accent); }
+@media (max-width: 620px) { .contents ol { columns: 1; } }
+
+pre {
+  font-family: var(--mono);
+  font-size: 13.5px;
+  line-height: 1.7;
+  background: var(--surface);
+  border-left: 2px solid var(--accent);
+  padding: 16px 18px;
+  margin: 0;
+  overflow-x: auto;
+  color: var(--fg);
+}
+code { font-family: var(--mono); font-size: 0.9em; }
+
+figure { margin: 0; display: flex; flex-direction: column; gap: 10px; }
+figure img { border: 1px solid var(--rule); background: #fcfcfb; }
+figcaption {
+  font-family: var(--sans);
+  font-size: 13px;
+  line-height: 1.52;
+  color: var(--muted);
+  max-width: var(--measure);
+}
+figcaption b, figcaption strong { color: var(--fg); font-weight: 600; }
+
+.tablewrap { overflow-x: auto; }
+table {
+  border-collapse: collapse;
+  font-family: var(--sans);
+  font-size: 13.5px;
+  font-variant-numeric: tabular-nums;
+  min-width: 100%;
+}
+th, td { padding: 8px 14px 8px 0; text-align: left; border-bottom: 1px solid var(--rule); white-space: nowrap; }
+thead th {
+  font-weight: 600;
+  font-size: 11.5px;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  color: var(--muted);
+  border-bottom-color: var(--fg);
+}
+tbody tr:last-child td { border-bottom: none; }
+td.num, th.num { text-align: right; padding-right: 22px; }
+.key td { font-weight: 500; }
+.key td:first-child::after { content: ""; }
+
+/* Parameter table: grouped, graded, and wide enough for a source to breathe. */
+#parameters table { font-size: 12.5px; }
+#parameters td:last-child, #parameters th:last-child {
+  white-space: normal;
+  min-width: 22em;
+  color: var(--muted);
+}
+#parameters td:nth-child(2) { white-space: normal; min-width: 14em; }
+tr.group td {
+  font-family: var(--sans);
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding-top: 16px;
+  border-bottom: 1px solid var(--fg);
+}
+tr.group:first-child td { padding-top: 0; }
+.band { color: var(--muted); font-size: 11.5px; }
+.grade {
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  padding: 2px 7px;
+  border-radius: 3px;
+  border: 1px solid var(--rule);
+  color: var(--muted);
+}
+.grade.calibration { border-color: var(--accent); color: var(--accent); }
+
+.note {
+  font-family: var(--sans);
+  font-size: 14.5px;
+  line-height: 1.55;
+  border-left: 2px solid var(--accent);
+  padding-left: 16px;
+  color: var(--fg);
+}
+
+footer {
+  font-family: var(--sans);
+  font-size: 12.5px;
+  color: var(--muted);
+  border-top: 1px solid var(--rule);
+  padding-top: 18px;
+  max-width: var(--measure);
+}
+/* Body content. The Markdown is a flat h1/h2/h3 stream, so vertical rhythm and
+   the breakout widths live here instead of in hand-placed .col wrappers. Prose
+   stays at the reading measure; figures, tables and equations run wider.
+   Levels are restyled rather than remapped, so the heading a reader sees matches
+   the one in the document outline and in the table of contents. */
+main > * + * { margin-top: 1.05em; }
+main > p, main > ul, main > ol, main > blockquote { max-width: var(--measure); }
+
+/* The bilingual review copy only. A translation sits directly under the English
+   it renders, so it has to read as a second voice rather than as the next
+   paragraph: a rule down the left edge, muted ink, and the looser line-height
+   CJK needs. Unused by the published pages, which carry no .zh at all. */
+main > p.zh {
+  border-left: 2px solid var(--rule);
+  padding-left: 0.85em;
+  margin-top: 0.5em;
+  color: var(--muted);
+  font-size: 0.94em;
+  line-height: 1.85;
+}
+main > p.zh strong { color: var(--fg); }
+main > p.zh + p.zh { margin-top: 0.35em; }
+main > figure, main > .tablewrap, main > .eq, main > pre { max-width: var(--wide); }
+
+main > h1 {                      /* "1. Calibration" -- the section label */
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 1.05rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin: 3em 0 24px;
+  padding-bottom: 9px;
+  border-bottom: 1px solid var(--rule);
+}
+main > h1:first-child { margin-top: 0; }
+
+main > h2 {                      /* "1.1 Is the AND gate multiplicative?" */
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 1.22rem;
+  line-height: 1.28;
+  letter-spacing: -0.012em;
+  text-transform: none;
+  color: var(--fg);
+  border: 0;
+  padding: 0;
+  margin: 2.4em 0 0.4em;
+  max-width: var(--measure);
+  text-wrap: balance;
+}
+
+main > h3 {                      /* "Model", "Parameters", "Results" */
+  font-family: var(--sans);
+  font-weight: 600;
+  font-size: 0.78rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin: 2em 0 0.3em;
+}
+
+/* Cells are nowrap so numbers never break mid-value, but the last column of
+   these tables is a sentence (a source, a verdict, what a failure would have
+   falsified). Letting just that one wrap keeps the wide tables on the page
+   instead of behind a horizontal scrollbar. */
+main .tablewrap td:last-child, main .tablewrap th:last-child,
+main .tablewrap td:nth-child(2) { white-space: normal; }
+
+main > hr {
+  border: 0;
+  border-top: 1px solid var(--rule);
+  max-width: var(--wide);
+  margin: 2.8em 0;
+}
+
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+/* Citations link both ways: the raised number down to its entry in §8, and
+   that entry's own number back to the first place the page cited it. A marker
+   is small and raised so it never breaks the line it sits in. */
+sup.cite, sup.xref { font-size: 0.72em; line-height: 0; vertical-align: super; white-space: nowrap; }
+sup.cite a { color: var(--accent); text-decoration: none; padding: 0 0.05em; }
+sup.cite a:hover, sup.xref a:hover { text-decoration: underline; }
+/* A section mark keeps its §, so a raised "1.1" is never read as a reference
+   number; it is set in the muted grey, because it points inside the page. */
+sup.xref a { color: var(--muted); text-decoration: none; padding: 0 0.05em; }
+.references { max-width: var(--wide); }
+.references p.reference {
+  margin: 0 0 0.6em 0;
+  padding-left: 2.4em;
+  text-indent: -2.4em;   /* hanging indent: the number stands clear of the text */
+}
+.references p.reference:target { background: var(--rule); border-radius: 3px; }
+.references a.refnum { display: inline-block; min-width: 1.9em; font-variant-numeric: tabular-nums; }
+.references a { color: var(--accent); text-decoration: none; }
+.references a:hover { text-decoration: underline; }
+/* Display equations break out wider than the prose, like figures and tables.
+   The number is a flex sibling, not KaTeX's own \tag: KaTeX positions that
+   absolutely against a box the width of the column, so a formula wider than
+   the column scrolls out from under its own number. min-width:0 lets the
+   formula shrink and scroll inside its own box instead of pushing the number. */
+.eq { max-width: var(--wide); margin: 22px 0; display: flex; align-items: center; gap: 20px; }
+.eq-math { flex: 1 1 auto; min-width: 0; overflow-x: auto; overflow-y: hidden; }
+.eq-math .katex-display { margin: 0; padding: 2px 0; }
+.eq-tag {
+  flex: 0 0 auto;
+  font-family: var(--mono);
+  font-size: 0.8em;
+  color: var(--muted);
+  font-variant-numeric: tabular-nums;
+}
+@media (max-width: 620px) { .eq { gap: 10px; } .eq-tag { font-size: 0.72em; } }
+</style>
+<!-- KaTeX renders the equation blocks. Pinned, and loaded from a CDN, so the
+     page is no longer strictly self-contained: if the iGEM wiki's CSP blocks
+     cdnjs, upload katex.min.css / katex.min.js / auto-render.min.js as wiki
+     assets and swap these three URLs for the uploaded paths. -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.css">
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/katex.min.js"></script>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/KaTeX/0.16.9/contrib/auto-render.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    if (typeof renderMathInElement !== "function") return;
+    renderMathInElement(document.body, {
+      delimiters: [
+        { left: "$$", right: "$$", display: true },
+        { left: "$", right: "$", display: false },
+      ],
+      ignoredTags: ["script", "noscript", "style", "textarea", "pre", "code"],
+      throwOnError: false,
+    });
+  });
+</script>
+</head>
+<body>
+<div class="page">
+
+<header class="masthead">
+  <div class="eyebrow">{{EYEBROW}}</div>
+  <h1>{{TITLE}}</h1>
+  <p class="standfirst">{{STANDFIRST}}</p>
+</header>
+
+{{CONTENT}}
+
+<footer>
+  {{FOOTER}}
+</footer>
+
+</div>
+</body>
+</html>

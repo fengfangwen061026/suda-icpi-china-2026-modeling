@@ -255,12 +255,18 @@ Discussion，各 1 个。**Characterisation 只有 1 节，而对标件有 3 节
 > to 1 × 10⁻⁴ for the spatial model), and encode the claims we are *not* allowed
 > to make as executable assertions (for example `misfit_propagates() -> False`).
 >
-> **Reproducing everything on this page:**
+> **Data.** The raw experimental workbook this cycle produced is in the repository
+> (`data/`, md5 `9b40a8e00a316ba169928dffe242324b`), so every number above can be
+> recomputed from source rather than taken on trust.
+>
+> **Reproducing everything on this page**, from a clean clone:
 > ```bash
+> git clone <repo> && cd <repo>
 > pip install -r requirements.txt
 > python -m pytest tests/ -q      # 390 passed, 2 skipped
 > python main.py                  # regenerates every figure and table
 > ```
+> We have checked this from a fresh clone rather than assuming it.
 >
 > **Repository:** `<GitLab URL — 见 §4 第 2 条，发布前必须填上>`
 
@@ -312,27 +318,33 @@ Discussion，各 1 个。**Characterisation 只有 1 节，而对标件有 3 节
 所以 D 节那句设计警告照原样粘即可。**唯一要守的纪律：粘的时候不要手痒把 BBa 号加
 回去。**
 
-### 4.2 代码根本没进版本控制
+### 4.2 代码仓库 —— 已建好，只差推送
 
-`model_v2/` 下**只有 `.gitignore`，没有 `.git`** —— 整个建模仓库从来没初始化过。
-而 `Dry-lab modelling` 那条提示明写要 **GitHub or GitLab links**，E 节结尾那行现在
-是空的。
+2026-10-21 建库完毕，`model_v2/` 现在是一个 git 仓库，三次提交：
 
-要做的事，按顺序：
+```
+f544ee3 公开原始实验数据工作簿
+f779f6a requirements.txt 钉住版本，与零件页 Dry-lab modelling 节一致
+e30ebda EcN 结直肠癌工程菌建模 v2：首次提交
+```
 
-1. `git init` + 首次提交。**现有 `.gitignore` 只排了 `.venv/`、`__pycache__/`、
-   `*.pyc`、`.pytest_cache/`，没有排 `data/`** —— 也就是说照现状一提交，
-   `data/全部实验数据.xlsx`（全队这一轮唯一的原始数据）就会一起公开。
-   **这个要先问队里**：公开它对第 3 条 ballot 是加分（可复现），但那是湿实验组的
-   数据，不是建模组能单方面决定的。
-2. 推到 **iGEM 自己的 GitLab**（`gitlab.igem.org`，每队有仓库）。用 iGEM GitLab 而
-   不是 GitHub 的好处：评委点得进去、不依赖个人账号、和 wiki 同源。
-3. 补一个 `LICENSE`。零件页本身已经是 **CC BY 4.0**，代码配 MIT 或 Apache-2.0 都行,
-   但**必须有**——没 license 的仓库等于"不可复用"，直接打第 3 条 ballot
-   （useful to the community）的脸。
-4. 把 URL 填回 E 节。
+已办：
 
-> 这一条不解决，E 节就只能交三分之二。而 E 节恰恰是对标件没有、我们能拿满的一节。
+- **`LICENSE`（MIT）** —— 零件页本身是 CC BY 4.0，代码配 MIT，互不冲突。没 license
+  的仓库等于"不可复用"，会直接打第 3 条 ballot 的脸。
+- **`requirements.txt` 钉死版本**，与 E 节声称的 pinned versions 一致。
+- **原始数据随库公开**（团队 2026-10-21 决定）：`data/全部实验数据.xlsx`，
+  md5 `9b40a8e00a316ba169928dffe242324b`。
+- **可复现性已验证**：从仓库全新 `git clone` 出来，只用库里的内容跑测试，
+  **390 passed / 2 skipped**。E 节"一条命令复现全部结果"不是修辞。
+- `.docx-build/`、`.venv/` 已排除。
+
+还差：
+
+1. **推到 `gitlab.igem.org/2026/software/suda-icpi-china`**。
+   ⚠️ **不要推到 `gitlab.igem.org/2026/suda-icpi-china`** —— 那是 wiki 仓库，
+   推代码进去会覆盖 wiki。
+2. 把仓库 URL 填回 **E 节结尾那行占位符**。
 
 ---
 

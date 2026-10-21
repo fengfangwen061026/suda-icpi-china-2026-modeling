@@ -1,7 +1,9 @@
-numpy
-scipy
-pandas
-matplotlib
-openpyxl
-SALib
-pytest
+# 版本为 2026-10-21 实测环境（Python 3.13.5）。
+# 零件页 Dry-lab modelling 节声称 pinned versions，改动请同步那一节。
+numpy==2.5.3
+scipy==1.18.1
+pandas==3.0.6
+matplotlib==3.11.2
+openpyxl==3.1.5
+SALib==1.6.0
+pytest==9.1.1
